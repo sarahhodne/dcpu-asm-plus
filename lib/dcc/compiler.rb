@@ -41,7 +41,6 @@ module DCC
     def create_preamble
       asm = []
       asm << 'JSR main'
-      asm << ':halt SET PC halt'
       asm << ':print'
       asm << 'SET B, 0x8000'
       asm << ':print_loopbegin'
@@ -53,6 +52,7 @@ module DCC
       asm << 'SET PC, print_loopbegin'
       asm << ':print_loopdone'
       asm << 'SET PC, POP'
+      asm << ':halt SET PC, halt'
 
       asm.join("\n") + "\n"
     end
