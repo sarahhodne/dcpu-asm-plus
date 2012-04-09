@@ -1,6 +1,6 @@
 module DCC
   class Parser
-    attr_reader :tree, :data
+    attr_reader :tree, :data, :data_length
 
     def initialize
       @tokens = []

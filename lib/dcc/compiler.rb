@@ -58,6 +58,7 @@ module DCC
     end
 
     def create_data
+      return "" if @parser.data_length == 0
       asm = []
 
       asm << ':data'
