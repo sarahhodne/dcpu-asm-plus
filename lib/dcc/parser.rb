@@ -26,6 +26,8 @@ module DCC
         parse_id(token)
       when :string
         parse_string(token)
+      when :int
+        parse_int(token)
       else
         token
       end
@@ -62,6 +64,9 @@ module DCC
     end
 
     def read_function_body
+    def parse_int(token)
+      token.last.to_i
+    end
       function_body = []
       until @tokens.first == [:keyword, 'ENDFUNC']
         function_body << parse_token(@tokens.shift)

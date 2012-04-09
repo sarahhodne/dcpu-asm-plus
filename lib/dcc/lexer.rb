@@ -20,6 +20,10 @@ module DCC
             @tokens << [:keyword, token]
           when /\A[a-z]+\Z/
             @tokens << [:id, token]
+          when /\A[0-9]+\Z/
+            @tokens << [:int, token.to_i]
+          when /\A'/
+            @tokens << [:int, token[1].ord]
           when /\A"/
             token = token[1..-1]
             str = ''
