@@ -55,6 +55,12 @@ module DCC
         [:return, parse_token(@tokens.shift)]
       when 'SET'
         [:set, parse_token(@tokens.shift), parse_token(@tokens.shift)]
+      when 'SUB'
+        [:sub, parse_token(@tokens.shift), parse_token(@tokens.shift)]
+      when 'ADD'
+        [:add, parse_token(@tokens.shift), parse_token(@tokens.shift), parse_token(@tokens.shift)]
+      when 'INC'
+        [:inc, parse_token(@tokens.shift), parse_token([:int, 1])]
       else
         token
       end

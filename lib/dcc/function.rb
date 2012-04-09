@@ -61,6 +61,20 @@ module DCC
           asm << "SET #{var(asm, code[1])}, #{var(asm, code[2])}"
         when :set
           asm << "SET #{var(asm, code[1])}, #{var(asm, code[2])}"
+        when :add
+          if code.size == 3
+            asm << "ADD #{var(asm, code[1])}, #{var(asm, code[2])}"
+          else
+            asm << "SET #{var(asm, code[3])}, #{var(asm, code[1])}"
+            asm << "ADD #{var(asm, code[3])}, #{var(asm, code[2])}"
+          end
+        when :sub
+          if code.size == 3
+            asm << "SUB #{var(asm, code[1])}, #{var(asm, code[2])}"
+          else
+            asm << "SET #{var(asm, code[3])}, #{var(asm, code[1])}"
+            asm << "SUB #{var(asm, code[3])}, #{var(asm, code[2])}"
+          end
         when :return
           asm << "SET A, #{var(asm, code[1])}; return"
           asm << 'SET SP, J'
