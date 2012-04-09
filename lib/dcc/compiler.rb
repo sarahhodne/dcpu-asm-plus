@@ -28,9 +28,13 @@ module DCC
       case token.first
       when :function
         function_name = token[1]
-        function = DCC::Function.new
+        function_arguments = token[2]
+        function_body = token[3]
+        function = DCC::Function.new(function_name)
         @functions[function_name] = function
-        token[2].each { |body_token| function.code << parse_token(body_token) }
+        function.argc = function_arguments.size
+        function.argv = function_arguments
+        function_body.each { |body_token| function.code << parse_token(body_token) }
 
         function
       when :print, :call
