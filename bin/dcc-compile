@@ -1,0 +1,18 @@
+#!/usr/bin/env ruby
+
+require 'dcc'
+
+lexer = DCC::Lexer.new
+lexer.lex($stdin)
+
+# p lexer
+
+parser = DCC::Parser.new
+parser.parse(lexer)
+
+# p parser
+
+compiler = DCC::Compiler.new
+compiler.compile(parser)
+
+puts compiler.asm
