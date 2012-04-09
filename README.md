@@ -12,6 +12,12 @@ FUNC main
 ENDFUNC
 ```
 
+Compile the program like this:
+
+    $ ruby -Ilib bin/dcc-compile < source_file
+
+Assembly is printed to STDOUT. Run with your favourite emulator.
+
 ## Syntax
 
 * Indentation is optional
