@@ -40,12 +40,21 @@ module DCC
         # function_name_token should be an ID
         # TODO: Add checking of the above
         function_name = function_name_token.last
+        function_arguments = read_until_keyword
 
-        [:function, function_name, read_function_body]
+        [:function, function_name, function_arguments, read_body_until([:keyword, 'ENDFUNC'])]
       when 'CALL'
-        [:call, @tokens.shift.last]
+        [:call, @tokens.shift.last, read_until_keyword]
       when 'PRINT'
         [:print, parse_token(@tokens.shift)]
+      when 'VAR'
+        [:var, @tokens.shift.last, parse_token(@tokens.shift)]
+      when 'SRET'
+        [:sret, parse_token(@tokens.shift)]
+      when 'RET'
+        [:return, parse_token(@tokens.shift)]
+      when 'SET'
+        [:set, parse_token(@tokens.shift), parse_token(@tokens.shift)]
       else
         token
       end
@@ -63,12 +72,23 @@ module DCC
       @data_length - str.length
     end
 
-    def read_function_body
     def parse_int(token)
       token.last.to_i
     end
+    def read_until_keyword
+      tokens = []
+      token = @tokens.shift
+      until token.first == :keyword
+        tokens << parse_token(token)
+        token = @tokens.shift
+      end
+      @tokens.unshift(token)
+
+      tokens
+    end
+    def read_body_until(token)
       function_body = []
-      until @tokens.first == [:keyword, 'ENDFUNC']
+      until @tokens.first == token
         function_body << parse_token(@tokens.shift)
       end
       @tokens.shift # Remove the ENDFUNC keyword
